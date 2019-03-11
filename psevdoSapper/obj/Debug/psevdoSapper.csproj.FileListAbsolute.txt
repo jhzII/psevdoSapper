@@ -1,0 +1,8 @@
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\bin\Debug\psevdoSapper.exe.config
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\bin\Debug\psevdoSapper.exe
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\bin\Debug\psevdoSapper.pdb
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.csprojResolveAssemblyReference.cache
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.Properties.Resources.resources
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.csproj.GenerateResource.Cache
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.exe
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.pdb
