@@ -6,3 +6,6 @@ F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevd
 F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.csproj.GenerateResource.Cache
 F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.exe
 F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.pdb
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.Form1.resources
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.FormDefeat.resources
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.FormVictory.resources
