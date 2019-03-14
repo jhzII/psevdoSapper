@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 /* future:
- * Настройка параметров матрицы 
+ * public static MatrixSapperButton main_matrix; --> public MatrixSapperButton main_matrix;
  * Вывод количества оставшегося количества мин
  * приемлимый внешний вид
  * Help
@@ -18,11 +18,13 @@ using System.Windows.Forms;
 namespace psevdoSapper {
 	public partial class Form1 : Form {
 		public static MatrixSapperButton main_matrix;
+		public radioButtonOption selectedBatton;
 		static Form1 form;
 		public Form1() {
 			InitializeComponent();
 
-			main_matrix = new MatrixSapperButton(9, 9, 10);
+			main_matrix = new MatrixSapperButton(16, 16, 40);
+			selectedBatton = radioButtonOption.Medium;
 			main_matrix.AddMatrixSapperButtonOnForm(this);
 			form = this;
 		}
@@ -53,7 +55,9 @@ namespace psevdoSapper {
 		// Settings
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e) {
 			// вызвать окно настройки размера
-			MessageBox.Show("Oops, not ready yet");
+			FormSettings SetForm = new FormSettings(form, selectedBatton);
+			SetForm.Show();
+			//MessageBox.Show("Oops, not ready yet");
 		}
 
 		// Exit
@@ -94,9 +98,10 @@ namespace psevdoSapper {
 			for(int i = 0; i < n; i++)
 				for(int j = 0; j < m; j++)
 					form.Controls.Add(matrix[i, j]);
-			form.Size = new Size(100 + 20 * (n + 1), 120 + 20 * (m + 1));
-			form.MinimumSize = form.Size;
-			form.MaximumSize = form.Size;
+			form.MinimumSize = new Size(100 + 20 * (n + 1), 120 + 20 * (m + 1));
+			form.MaximumSize = form.MinimumSize;
+			form.Size = form.MinimumSize;
+
 		}
 
 		public void RemoveMatrixSapperButtonOnForm(Form form) {
