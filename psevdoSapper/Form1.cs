@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 /* future:
- * приемлимый внешний вид
  * Help
+ * можно обработчики убрать в класс матриц и удалить пару переменных
  * */
+
+
 
 namespace psevdoSapper {
 	public partial class Form1 : Form {
 		public MatrixSapperButton supMatrix;
 		public radioButtonOption selectedBatton;
-		//public Form1 form;
 		public Form1() {
 			InitializeComponent();
 
@@ -97,7 +98,7 @@ namespace psevdoSapper {
 			for(int i = 0; i < n; i++)
 				for(int j = 0; j < m; j++)
 					form.Controls.Add(matrix[i, j]);
-			form.MinimumSize = new Size(100 + 20 * (n + 1), 120 + 20 * (m + 1));
+			form.MinimumSize = new Size(100 + 24 * (n + 1) + 1, 120 + 24 * (m + 1) + 1);
 			form.MaximumSize = form.MinimumSize;
 			form.Size = form.MinimumSize;
 			// позиционирование счетчика
@@ -244,6 +245,9 @@ namespace psevdoSapper {
 				matrix[ind_x, ind_y].open = true;
 				matrix[ind_x, ind_y].BackColor = Color.FromArgb(0xF6, 0xF6, 0xF6);
 				matrix[ind_x, ind_y].Text = ""; // = "0";
+				//matrix[ind_x, ind_y].FlatAppearance.BorderSize = 0;
+				matrix[ind_x, ind_y].FlatStyle = FlatStyle.Flat;
+
 				// пытаемся открыть соседние, если они есть
 				// верхняя линия
 				if(ind_y > 0 && ind_x > 0 && !matrix[ind_x - 1, ind_y - 1].open)
@@ -269,10 +273,32 @@ namespace psevdoSapper {
 				matrix[ind_x, ind_y].open = true;
 				matrix[ind_x, ind_y].BackColor = Color.FromArgb(0xF6, 0xF6, 0xF6);
 				matrix[ind_x, ind_y].Text = "" + matrix[ind_x, ind_y].open_value;
+				matrix[ind_x, ind_y].FlatStyle = FlatStyle.Flat;
 				matrix[ind_x, ind_y].MouseUp -= matrix[ind_x, ind_y].OpenMove;
 				matrix[ind_x, ind_y].MouseDoubleClick += matrix[ind_x, ind_y].HelpOpenCellsMove;
+				switch(matrix[ind_x, ind_y].open_value) {
+				case 1:
+					matrix[ind_x, ind_y].ForeColor = Color.FromArgb(0x40, 0x50, 0xBE);
+					break;
+				case 2:
+					matrix[ind_x, ind_y].ForeColor = Color.FromArgb(0x1D, 0x69, 0x05);
+					break;
+				case 3:
+					matrix[ind_x, ind_y].ForeColor = Color.FromArgb(0xAD, 0x02, 0x08);
+					break;
+				case 4:
+					matrix[ind_x, ind_y].ForeColor = Color.FromArgb(0x04, 0x08, 0x8A);
+					break;
+				default:
+					matrix[ind_x, ind_y].ForeColor = Color.FromArgb(0x75, 0x06, 0x00);
+					break;
+				}
+
+
+				
 			}
 			if(CheckVictory()) { // проверка на победу
+				form.label_kol_min.Text = "0 min left";
 				form.Victory();
 				return;
 			} 
@@ -396,7 +422,7 @@ namespace psevdoSapper {
 		
 		public Close close_value;   // 0 - просто	// 1 - флаг // 2 - знак вопроса
 
-		public byte Index_x { get; private set; } // свойство 
+		public byte Index_x { get; private set; } // свойство
 		public byte Index_y { get; private set; }
 
 		MatrixSapperButton belongs_matrix; // какой матрице принадлежит 
@@ -410,11 +436,14 @@ namespace psevdoSapper {
 			Index_y = indY;
 
 			// настроить размер и расположение
-			Size = new Size(20, 20);
-			Location = new Point(indX * 20 + 50, indY * 20 + 50);
-			BackColor = Color.FromArgb(0xE0, 0xE0, 0xE0);
+			Size = new Size(25, 25);
+			Location = new Point(indX * 24 + 50, indY * 24 + 50);			
 			Text = "";
-			
+			Font = new Font("GenericSansSerif", 9, FontStyle.Bold);
+			FlatStyle = FlatStyle.Flat;
+			BackColor = Color.FromArgb(0xE0, 0xE0, 0xE0);
+			FlatAppearance.BorderColor = Color.FromArgb(0x68, 0x68, 0x68);
+
 			MouseUp += FirstMove;
 
 			// знач по умолчанию
@@ -426,19 +455,23 @@ namespace psevdoSapper {
 		public void FirstMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if (button != null) {
+				// чуть костыль чтобы убрать фокус с кнопки
+				belongs_matrix.form.ActiveControl = belongs_matrix.form.label_kol_min;
 				// устанавливаем мины // удалить первый ход
 				// добавить открытие  // вызвать открытие от этой кнопки
-				button.belongs_matrix.InitializationField(button.Index_x, button.Index_y);
+				belongs_matrix.InitializationField(button.Index_x, button.Index_y);
 			}
 		}
 
 		public void OpenMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if(button != null) {
+				// чуть костыль чтобы убрать фокус с кнопки
+				belongs_matrix.form.ActiveControl = belongs_matrix.form.label_kol_min;
 				switch(e.Button) {
 				case MouseButtons.Left:
 					if(!button.open && button.close_value != Close.Flag)
-						button.belongs_matrix.Open_cell(button.Index_x, button.Index_y);
+						belongs_matrix.Open_cell(button.Index_x, button.Index_y);
 					break;
 				case MouseButtons.Right:
 					if(!button.open)
@@ -453,7 +486,9 @@ namespace psevdoSapper {
 		public void HelpOpenCellsMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if(button != null) {
-				button.belongs_matrix.HelpOpenCells(button.Index_x, button.Index_y);
+				belongs_matrix.HelpOpenCells(button.Index_x, button.Index_y);
+				// чуть костыль чтобы убрать фокус с кнопки
+				belongs_matrix.form.ActiveControl = belongs_matrix.form.label_kol_min;
 			}
 		}
 
@@ -464,11 +499,13 @@ namespace psevdoSapper {
 				Text = "";
 				break;
 			case Close.Flag:
-				Text = "!";
+				Text = "F";
+				ForeColor = Color.FromArgb(0xFF, 0x00, 0x00);
 				belongs_matrix.form.label_kol_min.Text = --belongs_matrix.kol_ost_min + " min left";
 				break;
 			case Close.Question:
 				Text = "?";
+				ForeColor = Color.FromArgb(0x35, 0x35, 0x35);
 				belongs_matrix.form.label_kol_min.Text = ++belongs_matrix.kol_ost_min + " min left";
 				break;
 			}
