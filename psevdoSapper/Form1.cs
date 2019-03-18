@@ -10,6 +10,8 @@ using System.Windows.Forms;
 
 /* future:
  * public static MatrixSapperButton main_matrix; --> public MatrixSapperButton main_matrix;
+ * нельзя открывать доп формы, если откырта другая 
+ * открытие очевидно доступных, при двойном клике
  * Вывод количества оставшегося количества мин
  * приемлимый внешний вид
  * Help
@@ -286,15 +288,113 @@ namespace psevdoSapper {
 				matrix[ind_x, ind_y].open = true;
 				matrix[ind_x, ind_y].BackColor = Color.FromArgb(0xF6, 0xF6, 0xF6);
 				matrix[ind_x, ind_y].Text = "" + matrix[ind_x, ind_y].open_value;
+				matrix[ind_x, ind_y].MouseUp -= matrix[ind_x, ind_y].OpenMove;
+				matrix[ind_x, ind_y].MouseDoubleClick += matrix[ind_x, ind_y].HelpOpenCellsMove;
+				//matrix[ind_x, ind_y].MouseUp += matrix[ind_x, ind_y].HelpOpenCellsMove;
 			}
 			if(CheckVictory()) {
 				Form1.Victory();
 				return;
 			} 
-			//	{
-			//	MessageBox.Show("Victory"); // ДБ ПЕРЕЗАПУСК 
-			//	Form1.Restart(n, m, kol_min);
-			//}				
+		}
+
+		// помощь открытия очевдных клеток без мин -- мб поражение 
+		public void HelpOpenCells(byte ind_x, byte ind_y) {
+			sbyte dif_min = 0;  // if мина -- увеличиваем значение
+								// if отметка -- уменьшаем значение
+								// if kol_min == 0 -- количество совпало
+
+			// проверка по верхней линии
+			if(ind_y > 0) {
+				if(ind_x > 0 && !matrix[ind_x - 1, ind_y - 1].open) {
+					if(matrix[ind_x - 1, ind_y - 1].open_value == 9)
+						dif_min++;
+					if(matrix[ind_x - 1, ind_y - 1].close_value == Close.Flag)
+						dif_min--;
+				}
+				if(!matrix[ind_x, ind_y - 1].open) {
+					if(matrix[ind_x, ind_y - 1].open_value == 9)
+						dif_min++;
+					if(matrix[ind_x, ind_y - 1].close_value == Close.Flag)
+						dif_min--;
+				}
+				if(ind_x < n - 1 && !matrix[ind_x + 1, ind_y - 1].open) {
+					if(matrix[ind_x + 1, ind_y - 1].open_value == 9)
+						dif_min++;
+					if(matrix[ind_x + 1, ind_y - 1].close_value == Close.Flag)
+						dif_min--;
+				}
+			}
+			// проверка по средней линии
+			if(ind_x > 0 && !matrix[ind_x - 1, ind_y].open) {
+				if(matrix[ind_x - 1, ind_y].open_value == 9)
+					dif_min++;
+				if(matrix[ind_x - 1, ind_y].close_value == Close.Flag)
+					dif_min--;
+			}
+			if(ind_x > n - 1 && !matrix[ind_x + 1, ind_y].open) {
+				if(matrix[ind_x + 1, ind_y].open_value == 9)
+					dif_min++;
+				if(matrix[ind_x + 1, ind_y].close_value == Close.Flag)
+					dif_min--;
+			}
+			// проверка по нижней линии
+			if(ind_y < m - 1) {
+				if(ind_x > 0 && !matrix[ind_x - 1, ind_y + 1].open) {
+					if(matrix[ind_x - 1, ind_y + 1].open_value == 9)
+						dif_min++;
+					if(matrix[ind_x - 1, ind_y + 1].close_value == Close.Flag)
+						dif_min--;
+				}
+				if(!matrix[ind_x, ind_y + 1].open) {
+					if(matrix[ind_x, ind_y + 1].open_value == 9)
+						dif_min++;
+					if(matrix[ind_x, ind_y + 1].close_value == Close.Flag)
+						dif_min--;
+				}
+				if(ind_x < n - 1 && !matrix[ind_x + 1, ind_y + 1].open) {
+					if(matrix[ind_x + 1, ind_y + 1].open_value == 9)
+						dif_min++;
+					if(matrix[ind_x + 1, ind_y + 1].close_value == Close.Flag)
+						dif_min--;
+				}
+			}
+
+			// Если dif_min == 0 => отмечено нужное количество мин => открываем 
+			if (dif_min == 0) {
+				// открытие по верхней линии
+				if(ind_y > 0) {
+					if(ind_x > 0 && !matrix[ind_x - 1, ind_y - 1].open &&
+						matrix[ind_x - 1, ind_y - 1].close_value != Close.Flag)
+						Open_cell((byte)(ind_x - 1), (byte)(ind_y - 1));
+					if(!matrix[ind_x, ind_y - 1].open &&
+						matrix[ind_x, ind_y - 1].close_value != Close.Flag)
+						Open_cell(ind_x, (byte)(ind_y - 1));
+					if(ind_x < n - 1 && !matrix[ind_x + 1, ind_y - 1].open &&
+						matrix[ind_x + 1, ind_y - 1].close_value != Close.Flag)
+						Open_cell((byte)(ind_x + 1), (byte)(ind_y - 1));						
+				}
+				// открытие по средней линии
+				if(ind_x > 0 && !matrix[ind_x - 1, ind_y].open &&
+					matrix[ind_x - 1, ind_y].close_value != Close.Flag)
+					Open_cell((byte)(ind_x - 1), ind_y);
+				if(ind_x < n - 1 && !matrix[ind_x + 1, ind_y].open &&
+					matrix[ind_x + 1, ind_y].close_value != Close.Flag)
+					Open_cell((byte)(ind_x + 1), ind_y);				
+				// открытие по нижней линии
+				if(ind_y < m - 1) {
+					if(ind_x > 0 && !matrix[ind_x - 1, ind_y + 1].open &&
+						matrix[ind_x - 1, ind_y + 1].close_value != Close.Flag)
+						Open_cell((byte)(ind_x - 1), (byte)(ind_y + 1));
+					if(!matrix[ind_x, ind_y + 1].open &&
+						matrix[ind_x, ind_y + 1].close_value != Close.Flag)
+						Open_cell(ind_x, (byte)(ind_y + 1));
+					if(ind_x < n - 1 && !matrix[ind_x + 1, ind_y + 1].open &&
+						matrix[ind_x + 1, ind_y + 1].close_value != Close.Flag)
+						Open_cell((byte)(ind_x + 1), (byte)(ind_y + 1));
+				}
+			}
+
 		}
 
 		public bool CheckVictory() {
@@ -306,17 +406,18 @@ namespace psevdoSapper {
 		}
 	}
 
+	public enum Close { Close, Flag, Question };
 
 	public class SapperButton : Button {
-		public bool open; // true, если не открыта
+		public bool open; // true, если открыта
 		public byte open_value; // 0 - пустая
 								// 1-8 - сколько вокруг
 								// 9 - мина
-		public enum Close { Close, Flag, Question };
-		Close close_value;   // 0 - просто	// 1 - флаг // 2 - знак вопросаparameter		
+		
+		public Close close_value;   // 0 - просто	// 1 - флаг // 2 - знак вопросаparameter		
 
-		public byte Index_x { get; set; } // свойство 
-		public byte Index_y { get; set; }
+		public byte Index_x { get; private set; } // свойство 
+		public byte Index_y { get; private set; }
 
 		MatrixSapperButton belongs_matrix; // какой матрице принадлежит 
 
@@ -326,6 +427,9 @@ namespace psevdoSapper {
 		//	bool firstMove; // флаг совершения первого хода (для формирования поля)
 
 		public SapperButton(byte indX, byte indY, MatrixSapperButton matrix) : base() {
+			//Включаем опцию даблклика на кнопках
+			SetStyle(ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true);
+
 			belongs_matrix = matrix;
 			Index_x = indX;
 			Index_y = indY;
@@ -370,7 +474,24 @@ namespace psevdoSapper {
 					if(!button.open)
 						ChengeCloseValue();
 					break;
-				}					
+				}
+			}
+		}
+
+		public void HelpOpenCellsMove(object sender, MouseEventArgs e) {
+			SapperButton button = sender as SapperButton;
+			if(button != null) {
+				button.belongs_matrix.HelpOpenCells(button.Index_x, button.Index_y);
+			}
+		}
+
+		// помощь открытия очевдных клеток без мин -- мб поражение 
+		// CЮДА вызов, а реализацию в том классе 
+		public void HelpMove(object sender, MouseEventArgs e) {
+			SapperButton button = sender as SapperButton;
+			if(button != null) {
+
+				
 			}
 		}
 
