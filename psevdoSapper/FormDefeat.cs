@@ -18,7 +18,8 @@ namespace psevdoSapper {
 		}
 
 		private void buttonNewGame_Click(object sender, EventArgs e) {
-			Form1.Restart(Form1.main_matrix.n, Form1.main_matrix.m, Form1.main_matrix.kol_min);
+			main_form.Restart(main_form.supMatrix.n, main_form.supMatrix.m,
+							  main_form.supMatrix.kol_min);
 			this.Close();
 		}
 	}

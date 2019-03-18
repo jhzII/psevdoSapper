@@ -29,9 +29,9 @@ namespace psevdoSapper {
 				break;
 			case radioButtonOption.Special:
 				radioButtonSpecial.Checked = true;
-				textBoxWidth.Text = "" + Form1.main_matrix.n;
-				textBoxHeight.Text = "" + Form1.main_matrix.m;
-				textBoxMines.Text = "" + Form1.main_matrix.kol_min;
+				textBoxWidth.Text = "" + main_form.supMatrix.n;
+				textBoxHeight.Text = "" + main_form.supMatrix.m;
+				textBoxMines.Text = "" + main_form.supMatrix.kol_min;
 				TextBoxEnabled(true);
 				break;
 			}
@@ -45,21 +45,21 @@ namespace psevdoSapper {
 			if (radioButtonEasy.Checked) { // Easy
 				if (selectedButton != radioButtonOption.Easy) {
 					main_form.selectedBatton = radioButtonOption.Easy;
-					Form1.Restart(9, 9, 10);					
+					main_form.Restart(9, 9, 10);					
 				}
 				this.Close();
 			}
 			else if(radioButtonMedium.Checked) { // Medium
 				if(selectedButton != radioButtonOption.Medium) {
 					main_form.selectedBatton = radioButtonOption.Medium;
-					Form1.Restart(16, 16, 40);
+					main_form.Restart(16, 16, 40);
 				}
 				this.Close();
 			}
 			else if(radioButtonHard.Checked) { // Hard
 				if(selectedButton != radioButtonOption.Hard) {
 					main_form.selectedBatton = radioButtonOption.Hard;
-					Form1.Restart(30, 16, 99);
+					main_form.Restart(30, 16, 99);
 				}
 				this.Close();
 			}
@@ -69,12 +69,12 @@ namespace psevdoSapper {
 					byte new_n = Convert.ToByte(textBoxWidth.Text);
 					byte new_m = Convert.ToByte(textBoxHeight.Text);
 					int new_kol_min = Convert.ToInt32(textBoxMines.Text);
-					if (selectedButton != radioButtonOption.Special || 
-						Form1.main_matrix.n != new_n ||
-						Form1.main_matrix.m != new_m ||
-						Form1.main_matrix.kol_min != new_kol_min) {
+					if (selectedButton != radioButtonOption.Special ||
+						main_form.supMatrix.n != new_n ||
+						main_form.supMatrix.m != new_m ||
+						main_form.supMatrix.kol_min != new_kol_min) {
 						main_form.selectedBatton = radioButtonOption.Special;
-						Form1.Restart(new_n, new_m, new_kol_min);
+						main_form.Restart(new_n, new_m, new_kol_min);
 					}
 					this.Close();
 				}

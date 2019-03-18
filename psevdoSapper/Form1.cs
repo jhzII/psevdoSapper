@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 /* future:
- * public static MatrixSapperButton main_matrix; --> public MatrixSapperButton main_matrix;
  * нельзя открывать доп формы, если откырта другая 
  * открытие очевидно доступных, при двойном клике
  * Вывод количества оставшегося количества мин
@@ -19,47 +18,44 @@ using System.Windows.Forms;
 
 namespace psevdoSapper {
 	public partial class Form1 : Form {
-		public static MatrixSapperButton main_matrix;
+		public MatrixSapperButton supMatrix;
 		public radioButtonOption selectedBatton;
-		static Form1 form;
+		//public Form1 form;
 		public Form1() {
 			InitializeComponent();
 
-			main_matrix = new MatrixSapperButton(16, 16, 40);
+			supMatrix = new MatrixSapperButton(this, 16, 16, 40); // соответствует Medium
 			selectedBatton = radioButtonOption.Medium;
-			main_matrix.AddMatrixSapperButtonOnForm(this);
-			form = this;
+			supMatrix.AddMatrixSapperButtonOnForm();
 		}
 
-		public static void Restart(byte kol_n, byte kol_m, int k_min) {
-			main_matrix.RemoveMatrixSapperButtonOnForm(form);
-			main_matrix = new MatrixSapperButton(kol_n, kol_m, k_min);
-			main_matrix.AddMatrixSapperButtonOnForm(form);
+		public void Restart(byte kol_n, byte kol_m, int k_min) {
+			supMatrix.RemoveMatrixSapperButtonOnForm();
+			supMatrix = new MatrixSapperButton(this, kol_n, kol_m, k_min);
+			supMatrix.AddMatrixSapperButtonOnForm();
 		}
 
-		public static void Defeat() {
-			FormDefeat defForm = new FormDefeat(form); //////////////////////////
+		public void Defeat() {
+			FormDefeat defForm = new FormDefeat(this); //////////////////////////
 			defForm.Show();
 		}
 
-		public static void Victory() {
+		public void Victory() {
 			if (!FormVictory.open) {
-				FormVictory vicForm = new FormVictory(form); //////////////////////////
+				FormVictory vicForm = new FormVictory(this); //////////////////////////
 				vicForm.Show();
 			}
 		}
 
 		// New game
 		private void newGameToolStripMenuItem_Click(object sender, EventArgs e) {
-			Restart(main_matrix.n, main_matrix.m, main_matrix.kol_min);
+			Restart(supMatrix.n, supMatrix.m, supMatrix.kol_min);
 		}
 
-		// Settings
+		// Settings - вызвать окно настройки размера
 		private void settingsToolStripMenuItem_Click(object sender, EventArgs e) {
-			// вызвать окно настройки размера
-			FormSettings SetForm = new FormSettings(form, selectedBatton);
+			FormSettings SetForm = new FormSettings(this, selectedBatton);
 			SetForm.Show();
-			//MessageBox.Show("Oops, not ready yet");
 		}
 
 		// Exit
@@ -76,6 +72,7 @@ namespace psevdoSapper {
 	// размер клетки 20х20
 
 	public class MatrixSapperButton {
+		Form1 form;
 		SapperButton[,] matrix;
 
 		public byte n { get; private set; } // byte n; // количество столбцов
@@ -83,7 +80,8 @@ namespace psevdoSapper {
 		public int kol_min { get; private set; } // int kol_min; // количество мин 		
 		int kol_vid_min = 0; // количество мин, которые выделены
 
-		public MatrixSapperButton(byte kol_n, byte kol_m, int k_min) {
+		public MatrixSapperButton(Form1 form, byte kol_n, byte kol_m, int k_min) {
+			this.form = form;
 			// n - столбцов m - строк
 			n = kol_n;
 			m = kol_m;
@@ -96,24 +94,19 @@ namespace psevdoSapper {
 			}
 		}
 
-		public void AddMatrixSapperButtonOnForm(Form form) {
+		public void AddMatrixSapperButtonOnForm() {
 			for(int i = 0; i < n; i++)
 				for(int j = 0; j < m; j++)
 					form.Controls.Add(matrix[i, j]);
 			form.MinimumSize = new Size(100 + 20 * (n + 1), 120 + 20 * (m + 1));
 			form.MaximumSize = form.MinimumSize;
 			form.Size = form.MinimumSize;
-
 		}
 
-		public void RemoveMatrixSapperButtonOnForm(Form form) {
+		public void RemoveMatrixSapperButtonOnForm() {
 			for(int i = 0; i < n; i++)
 				for(int j = 0; j < m; j++)
 					form.Controls.Remove(matrix[i, j]);
-		}
-
-		public void test() {
-			MessageBox.Show("test");
 		}
 
 		public void InitializationField(byte ind_x, byte ind_y) {
@@ -185,15 +178,9 @@ namespace psevdoSapper {
 
 				matrix[rand_val % n, rand_val / n].open_value = 9;  // устанавливаем значение мины
 												// x = rand_val % n		// y = rand_val / n
-
-				// temporary
-				//matrix[rand_val % n, rand_val / n].Text = "9";
-				// temporary
 			}
 
-			// попытка расстановки сколько мин вокруг 
-
-			// 1 вариант
+			// попытка подсчета сколько мин вокруг 
 			// проверка сверху
 			for(int i = 1; i < n; i++)
 				for(int j = 0; j < m; j++)
@@ -234,12 +221,7 @@ namespace psevdoSapper {
 				for(int j = 1; j < m; j++)
 					if(matrix[i, j].open_value != 9 && matrix[i - 1, j - 1].open_value == 9)
 						matrix[i, j].open_value++;
-
-			// temporary
-			//for(int i =0; i < n; i++)
-			//	for(int j = 0; j < m; j++)
-			//		matrix[i, j].Text = "" + matrix[i, j].open_value; // ***********************
-			// temporary
+			
 			// открытть нажатую клетку
 			Open_cell(ind_x, ind_y);
 
@@ -252,14 +234,11 @@ namespace psevdoSapper {
 		}
 
 		public void Open_cell(byte ind_x, byte ind_y) {
-			if (matrix[ind_x, ind_y].open_value == 9) {
-				Form1.Defeat();
+			if (matrix[ind_x, ind_y].open_value == 9) { // открыли мину
+				form.Defeat();
 				return;
-				//MessageBox.Show("defeat");
-				//Form1.Restart(n, m, kol_min);
-				// ДБ ПЕРЕЗАПУСК
 			}
-			else if(matrix[ind_x, ind_y].open_value == 0) {
+			else if(matrix[ind_x, ind_y].open_value == 0) { // открыли пустую клетку
 				matrix[ind_x, ind_y].open = true;
 				matrix[ind_x, ind_y].BackColor = Color.FromArgb(0xF6, 0xF6, 0xF6);
 				matrix[ind_x, ind_y].Text = ""; // = "0";
@@ -284,16 +263,15 @@ namespace psevdoSapper {
 				if(ind_y < m - 1 && ind_x < n - 1 && !matrix[ind_x + 1, ind_y + 1].open)
 					Open_cell((byte)(ind_x + 1), (byte)(ind_y + 1));
 			}
-			else {
+			else { // открыли клетку с цифрой
 				matrix[ind_x, ind_y].open = true;
 				matrix[ind_x, ind_y].BackColor = Color.FromArgb(0xF6, 0xF6, 0xF6);
 				matrix[ind_x, ind_y].Text = "" + matrix[ind_x, ind_y].open_value;
 				matrix[ind_x, ind_y].MouseUp -= matrix[ind_x, ind_y].OpenMove;
 				matrix[ind_x, ind_y].MouseDoubleClick += matrix[ind_x, ind_y].HelpOpenCellsMove;
-				//matrix[ind_x, ind_y].MouseUp += matrix[ind_x, ind_y].HelpOpenCellsMove;
 			}
-			if(CheckVictory()) {
-				Form1.Victory();
+			if(CheckVictory()) { // проверка на победу
+				form.Victory();
 				return;
 			} 
 		}
@@ -360,7 +338,7 @@ namespace psevdoSapper {
 				}
 			}
 
-			// Если dif_min == 0 => отмечено нужное количество мин => открываем 
+			// Если dif_min == 0 => отмечено нужное количество мин => открываем
 			if (dif_min == 0) {
 				// открытие по верхней линии
 				if(ind_y > 0) {
@@ -414,18 +392,13 @@ namespace psevdoSapper {
 								// 1-8 - сколько вокруг
 								// 9 - мина
 		
-		public Close close_value;   // 0 - просто	// 1 - флаг // 2 - знак вопросаparameter		
+		public Close close_value;   // 0 - просто	// 1 - флаг // 2 - знак вопроса
 
 		public byte Index_x { get; private set; } // свойство 
 		public byte Index_y { get; private set; }
 
 		MatrixSapperButton belongs_matrix; // какой матрице принадлежит 
-
-		//static byte n; // количество столбцов
-		//static byte m; // количество строк 
-		//static byte kol_min; // количество мин 
-		//	bool firstMove; // флаг совершения первого хода (для формирования поля)
-
+		
 		public SapperButton(byte indX, byte indY, MatrixSapperButton matrix) : base() {
 			//Включаем опцию даблклика на кнопках
 			SetStyle(ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true);
@@ -435,14 +408,11 @@ namespace psevdoSapper {
 			Index_y = indY;
 
 			// настроить размер и расположение
-			// ...
 			Size = new Size(20, 20);
 			Location = new Point(indX * 20 + 50, indY * 20 + 50);
 			BackColor = Color.FromArgb(0xE0, 0xE0, 0xE0);
 			Text = "";
-
-			//Click += FirstMove;
-			//MouseClick += FirstMove;
+			
 			MouseUp += FirstMove;
 
 			// знач по умолчанию
@@ -454,8 +424,6 @@ namespace psevdoSapper {
 		public void FirstMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if (button != null) {
-				//MessageBox.Show("FirstMove " + button.Index_x + " - " + button.Index_y);
-
 				// устанавливаем мины // удалить первый ход
 				// добавить открытие  // вызвать открытие от этой кнопки
 				button.belongs_matrix.InitializationField(button.Index_x, button.Index_y);
@@ -477,21 +445,13 @@ namespace psevdoSapper {
 				}
 			}
 		}
-
+		
+		// помощь открытия очевдных клеток без мин -- мб поражение 
+		// CЮДА вызов, а реализацию в том классе 
 		public void HelpOpenCellsMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if(button != null) {
 				button.belongs_matrix.HelpOpenCells(button.Index_x, button.Index_y);
-			}
-		}
-
-		// помощь открытия очевдных клеток без мин -- мб поражение 
-		// CЮДА вызов, а реализацию в том классе 
-		public void HelpMove(object sender, MouseEventArgs e) {
-			SapperButton button = sender as SapperButton;
-			if(button != null) {
-
-				
 			}
 		}
 
