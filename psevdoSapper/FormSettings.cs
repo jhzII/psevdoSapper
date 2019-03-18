@@ -15,6 +15,7 @@ namespace psevdoSapper {
 		public FormSettings(Form1 form, radioButtonOption selectedButton) {
 			InitializeComponent();
 			main_form = form;
+			main_form.Enabled = false;
 			this.selectedButton = selectedButton;
 			// установка режима
 			switch(selectedButton) {
@@ -38,6 +39,7 @@ namespace psevdoSapper {
 		}
 
 		private void buttonCancel_Click(object sender, EventArgs e) {
+			main_form.Enabled = true;
 			this.Close();
 		}
 
@@ -45,8 +47,9 @@ namespace psevdoSapper {
 			if (radioButtonEasy.Checked) { // Easy
 				if (selectedButton != radioButtonOption.Easy) {
 					main_form.selectedBatton = radioButtonOption.Easy;
-					main_form.Restart(9, 9, 10);					
+					main_form.Restart(9, 9, 10);
 				}
+				main_form.Enabled = true;
 				this.Close();
 			}
 			else if(radioButtonMedium.Checked) { // Medium
@@ -54,6 +57,7 @@ namespace psevdoSapper {
 					main_form.selectedBatton = radioButtonOption.Medium;
 					main_form.Restart(16, 16, 40);
 				}
+				main_form.Enabled = true;
 				this.Close();
 			}
 			else if(radioButtonHard.Checked) { // Hard
@@ -61,6 +65,7 @@ namespace psevdoSapper {
 					main_form.selectedBatton = radioButtonOption.Hard;
 					main_form.Restart(30, 16, 99);
 				}
+				main_form.Enabled = true;
 				this.Close();
 			}
 			else if(radioButtonSpecial.Checked) { // Special
@@ -76,6 +81,7 @@ namespace psevdoSapper {
 						main_form.selectedBatton = radioButtonOption.Special;
 						main_form.Restart(new_n, new_m, new_kol_min);
 					}
+					main_form.Enabled = true;
 					this.Close();
 				}
 				else {

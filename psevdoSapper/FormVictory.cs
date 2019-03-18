@@ -13,6 +13,7 @@ namespace psevdoSapper {
 		public FormVictory(Form1 form) {
 			InitializeComponent();
 			main_form = form;
+			main_form.Enabled = false;
 			open = true;
 		}
 
@@ -24,6 +25,7 @@ namespace psevdoSapper {
 		private void buttonNewGame_Click(object sender, EventArgs e) {
 			main_form.Restart(main_form.supMatrix.n, main_form.supMatrix.m,
 							  main_form.supMatrix.kol_min);
+			main_form.Enabled = true;
 			open = false;
 			this.Close();
 		}

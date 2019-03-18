@@ -9,9 +9,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 /* future:
- * нельзя открывать доп формы, если откырта другая 
- * открытие очевидно доступных, при двойном клике
- * Вывод количества оставшегося количества мин
  * приемлимый внешний вид
  * Help
  * */
@@ -36,13 +33,15 @@ namespace psevdoSapper {
 		}
 
 		public void Defeat() {
-			FormDefeat defForm = new FormDefeat(this); //////////////////////////
-			defForm.Show();
+			if(!FormDefeat.open) {
+				FormDefeat defForm = new FormDefeat(this);
+				defForm.Show();
+			}
 		}
 
 		public void Victory() {
 			if (!FormVictory.open) {
-				FormVictory vicForm = new FormVictory(this); //////////////////////////
+				FormVictory vicForm = new FormVictory(this);
 				vicForm.Show();
 			}
 		}
@@ -72,20 +71,20 @@ namespace psevdoSapper {
 	// размер клетки 20х20
 
 	public class MatrixSapperButton {
-		Form1 form;
+		public Form1 form;
 		SapperButton[,] matrix;
 
 		public byte n { get; private set; } // byte n; // количество столбцов
 		public byte m { get; private set; } // byte m; // количество строк 
 		public int kol_min { get; private set; } // int kol_min; // количество мин 		
-		int kol_vid_min = 0; // количество мин, которые выделены
+		public int kol_ost_min; // количество мин, которые выделены
 
 		public MatrixSapperButton(Form1 form, byte kol_n, byte kol_m, int k_min) {
 			this.form = form;
 			// n - столбцов m - строк
 			n = kol_n;
 			m = kol_m;
-			kol_min = k_min;
+			kol_min = kol_ost_min = k_min;
 			matrix = new SapperButton[n, m];
 			for(int i = 0; i < n; i++) {
 				for(int j = 0; j < m; j++) {
@@ -101,6 +100,9 @@ namespace psevdoSapper {
 			form.MinimumSize = new Size(100 + 20 * (n + 1), 120 + 20 * (m + 1));
 			form.MaximumSize = form.MinimumSize;
 			form.Size = form.MinimumSize;
+			// позиционирование счетчика
+			form.label_kol_min.Location = new Point(form.Width - 120, form.Height - 60);
+			form.label_kol_min.Text = kol_ost_min + " min left";
 		}
 
 		public void RemoveMatrixSapperButtonOnForm() {
@@ -310,7 +312,7 @@ namespace psevdoSapper {
 				if(matrix[ind_x - 1, ind_y].close_value == Close.Flag)
 					dif_min--;
 			}
-			if(ind_x > n - 1 && !matrix[ind_x + 1, ind_y].open) {
+			if(ind_x < n - 1 && !matrix[ind_x + 1, ind_y].open) {
 				if(matrix[ind_x + 1, ind_y].open_value == 9)
 					dif_min++;
 				if(matrix[ind_x + 1, ind_y].close_value == Close.Flag)
@@ -463,9 +465,11 @@ namespace psevdoSapper {
 				break;
 			case Close.Flag:
 				Text = "!";
+				belongs_matrix.form.label_kol_min.Text = --belongs_matrix.kol_ost_min + " min left";
 				break;
 			case Close.Question:
 				Text = "?";
+				belongs_matrix.form.label_kol_min.Text = ++belongs_matrix.kol_ost_min + " min left";
 				break;
 			}
 		}
