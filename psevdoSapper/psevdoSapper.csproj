@@ -70,8 +70,12 @@
     <Compile Include="FormVictory.Designer.cs">
       <DependentUpon>FormVictory.cs</DependentUpon>
     </Compile>
+    <Compile Include="MatrixSapperButton.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SapperButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
