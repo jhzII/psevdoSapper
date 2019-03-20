@@ -21,6 +21,7 @@ namespace psevdoSapper {
 
 		private void buttonExit_Click(object sender, EventArgs e) {
 			new_game = false;
+			FormClose.open = true;
 			this.Close();
 		}
 
@@ -29,11 +30,13 @@ namespace psevdoSapper {
 		}
 
 		private void FormDefeat_FormClosing(object sender, FormClosingEventArgs e) {
+			main_form.Enabled = true;
+			open = false;
 			if(new_game)
 				main_form.Restart(main_form.supMatrix.n, main_form.supMatrix.m,
 								  main_form.supMatrix.kol_min);
-			main_form.Enabled = true;
-			open = false;
+			else
+				main_form.Close();
 		}
 	}
 }
