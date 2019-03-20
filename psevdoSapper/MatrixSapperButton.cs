@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace psevdoSapper {
 	public class MatrixSapperButton {
 		public Form1 form;
-		SapperButton[,] matrix;
+		public SapperButton[,] matrix { get; private set; }
 
 		public byte n { get; private set; } // byte n; // количество столбцов
 		public byte m { get; private set; } // byte m; // количество строк 
@@ -27,6 +27,17 @@ namespace psevdoSapper {
 			}
 		}
 
+		public MatrixSapperButton(Form1 form, SapperButton[,] matrix, byte kol_n, 
+								  byte kol_m, int k_min, int kol_ost_min) {
+			this.form = form;
+			// n - столбцов m - строк
+			n = kol_n;
+			m = kol_m;
+			kol_min = k_min;
+			this.kol_ost_min = kol_ost_min;
+			this.matrix = matrix;
+		}
+
 		public void AddMatrixSapperButtonOnForm() {
 			for(int i = 0; i < n; i++)
 				for(int j = 0; j < m; j++)
@@ -46,7 +57,7 @@ namespace psevdoSapper {
 		}
 
 
-		void FirstMove(object sender, MouseEventArgs e) {
+		public void FirstMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if(button != null) {
 				form.ActiveControl = form.label_kol_min; // убрать фокус
@@ -54,7 +65,7 @@ namespace psevdoSapper {
 			}
 		}
 
-		void OpenMove(object sender, MouseEventArgs e) {
+		public void OpenMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if(button != null) {
 				form.ActiveControl = form.label_kol_min; // убрать фокус
@@ -73,7 +84,7 @@ namespace psevdoSapper {
 		}
 
 		// помощь открытия очевдных клеток без мин -- мб поражение
-		void HelpOpenCellsMove(object sender, MouseEventArgs e) {
+		public void HelpOpenCellsMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if(button != null) {
 				form.ActiveControl = form.label_kol_min; // убрать фокус
@@ -84,6 +95,7 @@ namespace psevdoSapper {
 		// устанавливаем мины // удалить первый ход
 		// добавить открытие  // вызвать открытие от этой кнопки
 		void InitializationField(byte ind_x, byte ind_y) {
+			form.startGame = true;
 			int kol_null_kl = 0; // сколько нужно выделить пустых клеток
 
 			// в зависимости от расположения первой открываемой, выделяется:

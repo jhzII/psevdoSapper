@@ -52,6 +52,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormClose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormClose.Designer.cs">
+      <DependentUpon>FormClose.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormDefeat.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -76,8 +82,12 @@
     <Compile Include="SapperButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="SaveSetAndRez.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormClose.resx">
+      <DependentUpon>FormClose.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDefeat.resx">
       <DependentUpon>FormDefeat.cs</DependentUpon>
