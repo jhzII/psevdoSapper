@@ -10,3 +10,4 @@ F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevd
 F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.FormVictory.resources
 F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.FormSettings.resources
 F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.csprojResolveAssemblyReference.cache
+F:\Boris\education\polzuemoe\c#\Sapper\psevdoSapper\psevdoSapper\obj\Debug\psevdoSapper.FormClose.resources

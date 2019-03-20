@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.Serialization;
 using System.Windows.Forms;
 
 namespace psevdoSapper {
 	public enum Close { Close, Flag, Question };
 
-	public class SapperButton : Button {
+	[Serializable]
+	public class SapperButton : Button, ISerializable {
 		public bool open; // true, если открыта
 		public byte open_value; // 0 - пустая
 								// 1-8 - сколько вокруг
@@ -55,6 +57,46 @@ namespace psevdoSapper {
 				break;
 			}
 			return kMin;
+		}
+
+		protected SapperButton(SerializationInfo info, StreamingContext context):base()
+        {
+			this.open = (bool)info.GetValue("open", typeof(bool));
+			this.open_value = (byte)info.GetValue("open_value", typeof(byte));
+			this.close_value = (Close)info.GetValue("close_value", typeof(Close));
+			this.Index_x = (byte)info.GetValue("Index_x", typeof(byte));
+			this.Index_y = (byte)info.GetValue("Index_y", typeof(byte));
+
+			this.ForeColor = (Color)info.GetValue("ForeColor", typeof(Color));
+			this.Text = info.GetString("Text");
+			this.FlatStyle = (FlatStyle)info.GetValue("FlatStyle", typeof(FlatStyle));
+			this.BackColor = (Color)info.GetValue("BackColor", typeof(Color));
+			
+			this.Enabled = (bool)info.GetValue("Enable", typeof(bool));
+
+			//Включаем опцию даблклика на кнопках
+			SetStyle(ControlStyles.StandardClick | ControlStyles.StandardDoubleClick, true);
+			Size = new Size(25, 25);
+			Location = new Point(Index_x * 24 + 50, Index_y * 24 + 50);
+			Font = new Font("GenericSansSerif", 9, FontStyle.Bold);
+			//FlatStyle = FlatStyle.Flat;
+			FlatAppearance.BorderColor = Color.FromArgb(0x68, 0x68, 0x68);
+		}
+
+		public void GetObjectData(SerializationInfo info, StreamingContext context) {
+			info.AddValue("open", this.open);
+			info.AddValue("open_value", this.open_value);
+			info.AddValue("close_value", this.close_value);
+			info.AddValue("Index_x", this.Index_x);
+			info.AddValue("Index_y", this.Index_y);
+
+			info.AddValue("ForeColor", this.ForeColor);
+			info.AddValue("Text", this.Text);
+			info.AddValue("FlatStyle", this.FlatStyle);
+			info.AddValue("BackColor", this.BackColor);
+			
+			info.AddValue("Enable", this.Enabled);
+			//throw new NotImplementedException();
 		}
 	}
 }

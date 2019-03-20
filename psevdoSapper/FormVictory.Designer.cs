@@ -67,6 +67,7 @@
 			this.Controls.Add(this.labelVictory);
 			this.Name = "FormVictory";
 			this.Text = "FormVictory";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormVictory_FormClosing);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

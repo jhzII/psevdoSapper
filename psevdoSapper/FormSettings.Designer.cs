@@ -24,16 +24,16 @@
 		/// </summary>
 		private void InitializeComponent() {
 			this.groupBoxLevel = new System.Windows.Forms.GroupBox();
-			this.radioButtonEasy = new System.Windows.Forms.RadioButton();
-			this.radioButtonMedium = new System.Windows.Forms.RadioButton();
-			this.radioButtonHard = new System.Windows.Forms.RadioButton();
-			this.radioButtonSpecial = new System.Windows.Forms.RadioButton();
-			this.labelHeight = new System.Windows.Forms.Label();
-			this.labelWidth = new System.Windows.Forms.Label();
-			this.labelMines = new System.Windows.Forms.Label();
-			this.textBoxMines = new System.Windows.Forms.TextBox();
-			this.textBoxWidth = new System.Windows.Forms.TextBox();
 			this.textBoxHeight = new System.Windows.Forms.TextBox();
+			this.textBoxWidth = new System.Windows.Forms.TextBox();
+			this.textBoxMines = new System.Windows.Forms.TextBox();
+			this.labelMines = new System.Windows.Forms.Label();
+			this.labelWidth = new System.Windows.Forms.Label();
+			this.labelHeight = new System.Windows.Forms.Label();
+			this.radioButtonSpecial = new System.Windows.Forms.RadioButton();
+			this.radioButtonHard = new System.Windows.Forms.RadioButton();
+			this.radioButtonMedium = new System.Windows.Forms.RadioButton();
+			this.radioButtonEasy = new System.Windows.Forms.RadioButton();
 			this.buttonCancel = new System.Windows.Forms.Button();
 			this.buttonOk = new System.Windows.Forms.Button();
 			this.groupBoxLevel.SuspendLayout();
@@ -58,15 +58,83 @@
 			this.groupBoxLevel.TabStop = false;
 			this.groupBoxLevel.Text = "Level";
 			// 
-			// radioButtonEasy
+			// textBoxHeight
 			// 
-			this.radioButtonEasy.AutoSize = true;
-			this.radioButtonEasy.Location = new System.Drawing.Point(6, 29);
-			this.radioButtonEasy.Name = "radioButtonEasy";
-			this.radioButtonEasy.Size = new System.Drawing.Size(94, 43);
-			this.radioButtonEasy.TabIndex = 0;
-			this.radioButtonEasy.Text = "Easy\r\n10 mines\r\nfield 9 x 9 cells";
-			this.radioButtonEasy.UseVisualStyleBackColor = true;
+			this.textBoxHeight.Enabled = false;
+			this.textBoxHeight.Location = new System.Drawing.Point(273, 41);
+			this.textBoxHeight.Name = "textBoxHeight";
+			this.textBoxHeight.Size = new System.Drawing.Size(51, 20);
+			this.textBoxHeight.TabIndex = 9;
+			this.textBoxHeight.Text = "10";
+			// 
+			// textBoxWidth
+			// 
+			this.textBoxWidth.Enabled = false;
+			this.textBoxWidth.Location = new System.Drawing.Point(273, 64);
+			this.textBoxWidth.Name = "textBoxWidth";
+			this.textBoxWidth.Size = new System.Drawing.Size(51, 20);
+			this.textBoxWidth.TabIndex = 8;
+			this.textBoxWidth.Text = "20";
+			// 
+			// textBoxMines
+			// 
+			this.textBoxMines.Enabled = false;
+			this.textBoxMines.Location = new System.Drawing.Point(273, 89);
+			this.textBoxMines.Name = "textBoxMines";
+			this.textBoxMines.Size = new System.Drawing.Size(51, 20);
+			this.textBoxMines.TabIndex = 7;
+			this.textBoxMines.Text = "10";
+			// 
+			// labelMines
+			// 
+			this.labelMines.AutoSize = true;
+			this.labelMines.Enabled = false;
+			this.labelMines.Location = new System.Drawing.Point(147, 89);
+			this.labelMines.Name = "labelMines";
+			this.labelMines.Size = new System.Drawing.Size(119, 13);
+			this.labelMines.TabIndex = 6;
+			this.labelMines.Text = "Number of mines (5 - ?):";
+			// 
+			// labelWidth
+			// 
+			this.labelWidth.AutoSize = true;
+			this.labelWidth.Enabled = false;
+			this.labelWidth.Location = new System.Drawing.Point(144, 72);
+			this.labelWidth.Name = "labelWidth";
+			this.labelWidth.Size = new System.Drawing.Size(74, 13);
+			this.labelWidth.TabIndex = 5;
+			this.labelWidth.Text = "Width (5 - 50):";
+			// 
+			// labelHeight
+			// 
+			this.labelHeight.AutoSize = true;
+			this.labelHeight.Enabled = false;
+			this.labelHeight.Location = new System.Drawing.Point(144, 49);
+			this.labelHeight.Name = "labelHeight";
+			this.labelHeight.Size = new System.Drawing.Size(77, 13);
+			this.labelHeight.TabIndex = 4;
+			this.labelHeight.Text = "Height (5 - 50):";
+			// 
+			// radioButtonSpecial
+			// 
+			this.radioButtonSpecial.AutoSize = true;
+			this.radioButtonSpecial.Location = new System.Drawing.Point(120, 29);
+			this.radioButtonSpecial.Name = "radioButtonSpecial";
+			this.radioButtonSpecial.Size = new System.Drawing.Size(60, 17);
+			this.radioButtonSpecial.TabIndex = 3;
+			this.radioButtonSpecial.Text = "Special";
+			this.radioButtonSpecial.UseVisualStyleBackColor = true;
+			this.radioButtonSpecial.CheckedChanged += new System.EventHandler(this.radioButtonSpecial_CheckedChanged);
+			// 
+			// radioButtonHard
+			// 
+			this.radioButtonHard.AutoSize = true;
+			this.radioButtonHard.Location = new System.Drawing.Point(6, 127);
+			this.radioButtonHard.Name = "radioButtonHard";
+			this.radioButtonHard.Size = new System.Drawing.Size(106, 43);
+			this.radioButtonHard.TabIndex = 2;
+			this.radioButtonHard.Text = "Hard\r\n99 mines\r\nfield 30 x 16 cells";
+			this.radioButtonHard.UseVisualStyleBackColor = true;
 			// 
 			// radioButtonMedium
 			// 
@@ -80,83 +148,15 @@
 			this.radioButtonMedium.Text = "Medium\r\n40 mines\r\nfield 16 x 16 cells";
 			this.radioButtonMedium.UseVisualStyleBackColor = true;
 			// 
-			// radioButtonHard
+			// radioButtonEasy
 			// 
-			this.radioButtonHard.AutoSize = true;
-			this.radioButtonHard.Location = new System.Drawing.Point(6, 127);
-			this.radioButtonHard.Name = "radioButtonHard";
-			this.radioButtonHard.Size = new System.Drawing.Size(106, 43);
-			this.radioButtonHard.TabIndex = 2;
-			this.radioButtonHard.Text = "Hard\r\n99 mines\r\nfield 30 x 16 cells";
-			this.radioButtonHard.UseVisualStyleBackColor = true;
-			// 
-			// radioButtonSpecial
-			// 
-			this.radioButtonSpecial.AutoSize = true;
-			this.radioButtonSpecial.Location = new System.Drawing.Point(120, 29);
-			this.radioButtonSpecial.Name = "radioButtonSpecial";
-			this.radioButtonSpecial.Size = new System.Drawing.Size(60, 17);
-			this.radioButtonSpecial.TabIndex = 3;
-			this.radioButtonSpecial.Text = "Special";
-			this.radioButtonSpecial.UseVisualStyleBackColor = true;
-			this.radioButtonSpecial.CheckedChanged += new System.EventHandler(this.radioButtonSpecial_CheckedChanged);
-			// 
-			// labelHeight
-			// 
-			this.labelHeight.AutoSize = true;
-			this.labelHeight.Enabled = false;
-			this.labelHeight.Location = new System.Drawing.Point(144, 49);
-			this.labelHeight.Name = "labelHeight";
-			this.labelHeight.Size = new System.Drawing.Size(77, 13);
-			this.labelHeight.TabIndex = 4;
-			this.labelHeight.Text = "Height (5 - 50):";
-			// 
-			// labelWidth
-			// 
-			this.labelWidth.AutoSize = true;
-			this.labelWidth.Enabled = false;
-			this.labelWidth.Location = new System.Drawing.Point(144, 72);
-			this.labelWidth.Name = "labelWidth";
-			this.labelWidth.Size = new System.Drawing.Size(74, 13);
-			this.labelWidth.TabIndex = 5;
-			this.labelWidth.Text = "Width (5 - 50):";
-			// 
-			// labelMines
-			// 
-			this.labelMines.AutoSize = true;
-			this.labelMines.Enabled = false;
-			this.labelMines.Location = new System.Drawing.Point(147, 89);
-			this.labelMines.Name = "labelMines";
-			this.labelMines.Size = new System.Drawing.Size(119, 13);
-			this.labelMines.TabIndex = 6;
-			this.labelMines.Text = "Number of mines (5 - ?):";
-			// 
-			// textBoxMines
-			// 
-			this.textBoxMines.Enabled = false;
-			this.textBoxMines.Location = new System.Drawing.Point(273, 89);
-			this.textBoxMines.Name = "textBoxMines";
-			this.textBoxMines.Size = new System.Drawing.Size(51, 20);
-			this.textBoxMines.TabIndex = 7;
-			this.textBoxMines.Text = "10";
-			// 
-			// textBoxWidth
-			// 
-			this.textBoxWidth.Enabled = false;
-			this.textBoxWidth.Location = new System.Drawing.Point(273, 64);
-			this.textBoxWidth.Name = "textBoxWidth";
-			this.textBoxWidth.Size = new System.Drawing.Size(51, 20);
-			this.textBoxWidth.TabIndex = 8;
-			this.textBoxWidth.Text = "20";
-			// 
-			// textBoxHeight
-			// 
-			this.textBoxHeight.Enabled = false;
-			this.textBoxHeight.Location = new System.Drawing.Point(273, 41);
-			this.textBoxHeight.Name = "textBoxHeight";
-			this.textBoxHeight.Size = new System.Drawing.Size(51, 20);
-			this.textBoxHeight.TabIndex = 9;
-			this.textBoxHeight.Text = "10";
+			this.radioButtonEasy.AutoSize = true;
+			this.radioButtonEasy.Location = new System.Drawing.Point(6, 29);
+			this.radioButtonEasy.Name = "radioButtonEasy";
+			this.radioButtonEasy.Size = new System.Drawing.Size(94, 43);
+			this.radioButtonEasy.TabIndex = 0;
+			this.radioButtonEasy.Text = "Easy\r\n10 mines\r\nfield 9 x 9 cells";
+			this.radioButtonEasy.UseVisualStyleBackColor = true;
 			// 
 			// buttonCancel
 			// 
@@ -188,6 +188,7 @@
 			this.Controls.Add(this.groupBoxLevel);
 			this.Name = "FormSettings";
 			this.Text = "FormSettings";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSettings_FormClosing);
 			this.groupBoxLevel.ResumeLayout(false);
 			this.groupBoxLevel.PerformLayout();
 			this.ResumeLayout(false);
