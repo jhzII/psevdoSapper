@@ -11,11 +11,12 @@ namespace psevdoSapper {
 			open = true;
 		}
 
-		public FormVictory(Form1 form) {
+		public FormVictory(Form1 form, int sec) {
 			InitializeComponent();
 			main_form = form;
 			main_form.Enabled = false;
 			open = true;
+			labelWithTime.Text = "You won in " + sec + " seconds.";
 		}
 
 		private void buttonClose_Click(object sender, EventArgs e) {

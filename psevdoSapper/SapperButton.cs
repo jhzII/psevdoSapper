@@ -30,7 +30,7 @@ namespace psevdoSapper {
 			Text = "";
 			Font = new Font("GenericSansSerif", 9, FontStyle.Bold);
 			FlatStyle = FlatStyle.Flat;
-			BackColor = Color.FromArgb(0xE0, 0xE0, 0xE0);
+			BackColor = Color.FromArgb(0xDE, 0xDE, 0xDE);
 			FlatAppearance.BorderColor = Color.FromArgb(0x68, 0x68, 0x68);
 
 			// знач по умолчанию
@@ -46,11 +46,11 @@ namespace psevdoSapper {
 				Text = "";
 				break;
 			case Close.Flag:
-				Text = "F";
-				ForeColor = Color.FromArgb(0xFF, 0x00, 0x00);
+				BackgroundImage = Image.FromFile("../../images/flag.bmp");
 				kMin--;
 				break;
 			case Close.Question:
+				BackgroundImage = null;
 				Text = "?";
 				ForeColor = Color.FromArgb(0x35, 0x35, 0x35);
 				kMin++;
@@ -81,6 +81,8 @@ namespace psevdoSapper {
 			Font = new Font("GenericSansSerif", 9, FontStyle.Bold);
 			//FlatStyle = FlatStyle.Flat;
 			FlatAppearance.BorderColor = Color.FromArgb(0x68, 0x68, 0x68);
+			if(close_value == Close.Flag)
+				BackgroundImage = Image.FromFile("../../images/flag.bmp");
 		}
 
 		public void GetObjectData(SerializationInfo info, StreamingContext context) {

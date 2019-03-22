@@ -10,6 +10,7 @@ using System.IO;
 namespace psevdoSapper {
 	public partial class Form1 : Form {
 		public bool save = false; // определяет, надо ли сохранять
+		public StatisticsData statistiks;
 		public MatrixSapperButton supMatrix;
 		public radioButtonOption selectedBatton;
 		public bool startGame = false;
@@ -25,10 +26,15 @@ namespace psevdoSapper {
 
 				selectedBatton = saveS_R.selectedBatton;
 				supMatrix = saveS_R.createMatrixSapperButton(this);
+
+				/////////////////////////////////////////////
+				statistiks = new StatisticsData();
+				/////////////////////////////////////////////
 			}
 			catch {
 				supMatrix = new MatrixSapperButton(this, 16, 16, 40); // соответствует Medium
 				selectedBatton = radioButtonOption.Medium;
+				statistiks = new StatisticsData();
 			}
 						
 			supMatrix.AddMatrixSapperButtonOnForm();
@@ -50,7 +56,15 @@ namespace psevdoSapper {
 
 		public void Victory() {
 			if (!FormVictory.open) {
-				FormVictory vicForm = new FormVictory(this);
+				statistiks.massAllTimeData[(int)selectedBatton, 1]++;
+				if (supMatrix.seconds < statistiks.massAllTimeData[(int)selectedBatton, 2])
+					statistiks.massAllTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+
+				statistiks.massCurrentTimeData[(int)selectedBatton, 1]++;
+				if(supMatrix.seconds < statistiks.massCurrentTimeData[(int)selectedBatton, 2])
+					statistiks.massCurrentTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+
+				FormVictory vicForm = new FormVictory(this, supMatrix.seconds);
 				vicForm.Show();
 			}
 		}	

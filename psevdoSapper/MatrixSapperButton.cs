@@ -12,7 +12,11 @@ namespace psevdoSapper {
 		public int kol_min { get; private set; } // int kol_min; // количество мин 		
 		public int kol_ost_min;  // количество мин, которые выделены
 
+		Timer timer;
+		public int seconds; // время прохождения игры 
+
 		public MatrixSapperButton(Form1 form, byte kol_n, byte kol_m, int k_min) {
+			InitializeTimer();
 			this.form = form;
 			// n - столбцов m - строк
 			n = kol_n;
@@ -29,6 +33,7 @@ namespace psevdoSapper {
 
 		public MatrixSapperButton(Form1 form, SapperButton[,] matrix, byte kol_n, 
 								  byte kol_m, int k_min, int kol_ost_min) {
+			InitializeTimer();
 			this.form = form;
 			// n - столбцов m - строк
 			n = kol_n;
@@ -47,7 +52,9 @@ namespace psevdoSapper {
 			form.Size = form.MinimumSize;
 			// позиционирование счетчика
 			form.label_kol_min.Location = new Point(form.Width - 120, form.Height - 60);
-			form.label_kol_min.Text = kol_ost_min + " min left";
+			form.label_kol_min.Text = kol_ost_min + " mines left";
+			form.labelTime.Location = new Point(40, form.Height - 60);
+			form.labelTime.Text = "Time: " + seconds;
 		}
 
 		public void RemoveMatrixSapperButtonOnForm() {
@@ -62,6 +69,7 @@ namespace psevdoSapper {
 			if(button != null) {
 				form.ActiveControl = form.label_kol_min; // убрать фокус
 				InitializationField(button.Index_x, button.Index_y);
+				timer.Start();
 			}
 		}
 
@@ -77,7 +85,7 @@ namespace psevdoSapper {
 				case MouseButtons.Right:
 					if(!button.open)
 						kol_ost_min = button.ChengeCloseValue(kol_ost_min);
-					form.label_kol_min.Text = kol_ost_min + " min left";
+					form.label_kol_min.Text = kol_ost_min + " mines left";
 					break;
 				}
 			}
@@ -224,8 +232,10 @@ namespace psevdoSapper {
 				}
 		}
 
-		void Open_cell(byte ind_x, byte ind_y) {
+		private void Open_cell(byte ind_x, byte ind_y) {
 			if(matrix[ind_x, ind_y].open_value == 9) { // открыли мину
+				timer.Stop();
+				showMines();
 				form.Defeat();
 				return;
 			}
@@ -282,7 +292,8 @@ namespace psevdoSapper {
 				}
 			}
 			if(CheckVictory()) { // проверка на победу
-				form.label_kol_min.Text = "0 min left";
+				timer.Stop();
+				form.label_kol_min.Text = "0 mines left";
 				form.Victory();
 				return;
 			}
@@ -387,13 +398,31 @@ namespace psevdoSapper {
 
 		}
 
-		bool CheckVictory() {
+		private void showMines() {
+			for(int i = 0; i < n; i++)
+				for(int j = 0; j < n; j++)
+					if(matrix[i, j].open_value == 9)
+						matrix[i, j].BackgroundImage = Image.FromFile("../../images/mine.png");
+		}
+
+		private bool CheckVictory() {
 			int kol_close = 0;
 			for(int i = 0; i < n; i++)
 				for(int j = 0; j < m; j++)
 					if(!matrix[i, j].open)
 						kol_close++;
 			return (kol_close == kol_min);
+		}
+
+		private void InitializeTimer() {
+			timer = new Timer();
+			timer.Interval = 1000;
+			timer.Tick += TickTimer;
+		}
+
+		private void TickTimer(object sender, EventArgs e) {
+			seconds++;
+			form.labelTime.Text = "Time: " + seconds;
 		}
 	}
 }
