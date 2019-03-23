@@ -32,7 +32,7 @@ namespace psevdoSapper {
 		}
 
 		public MatrixSapperButton(Form1 form, SapperButton[,] matrix, byte kol_n, 
-								  byte kol_m, int k_min, int kol_ost_min) {
+								  byte kol_m, int k_min, int kol_ost_min, int time) {
 			InitializeTimer();
 			this.form = form;
 			// n - столбцов m - строк
@@ -41,6 +41,7 @@ namespace psevdoSapper {
 			kol_min = k_min;
 			this.kol_ost_min = kol_ost_min;
 			this.matrix = matrix;
+			seconds = time;
 		}
 
 		public void AddMatrixSapperButtonOnForm() {
@@ -61,6 +62,7 @@ namespace psevdoSapper {
 			for(int i = 0; i < n; i++)
 				for(int j = 0; j < m; j++)
 					form.Controls.Remove(matrix[i, j]);
+			timer.Stop();
 		}
 
 
@@ -104,6 +106,7 @@ namespace psevdoSapper {
 		// добавить открытие  // вызвать открытие от этой кнопки
 		void InitializationField(byte ind_x, byte ind_y) {
 			form.startGame = true;
+
 			int kol_null_kl = 0; // сколько нужно выделить пустых клеток
 
 			// в зависимости от расположения первой открываемой, выделяется:
@@ -423,6 +426,14 @@ namespace psevdoSapper {
 		private void TickTimer(object sender, EventArgs e) {
 			seconds++;
 			form.labelTime.Text = "Time: " + seconds;
+		}
+
+		public void TimerStart() {
+			timer.Start();
+		}
+
+		public void TimerStop() {
+			timer.Stop();
 		}
 	}
 }

@@ -70,6 +70,12 @@
     <Compile Include="FormSettings.Designer.cs">
       <DependentUpon>FormSettings.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormStatistiks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStatistiks.Designer.cs">
+      <DependentUpon>FormStatistiks.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormVictory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettings.resx">
       <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStatistiks.resx">
+      <DependentUpon>FormStatistiks.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormVictory.resx">
       <DependentUpon>FormVictory.cs</DependentUpon>

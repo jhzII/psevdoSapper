@@ -33,6 +33,7 @@
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.labelTime = new System.Windows.Forms.Label();
+			this.staticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -62,6 +63,7 @@
 			this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGameToolStripMenuItem,
             this.toolStripSeparator1,
+            this.staticsToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
@@ -117,6 +119,13 @@
 			this.labelTime.TabIndex = 2;
 			this.labelTime.Text = "labelTime";
 			// 
+			// staticsToolStripMenuItem
+			// 
+			this.staticsToolStripMenuItem.Name = "staticsToolStripMenuItem";
+			this.staticsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.staticsToolStripMenuItem.Text = "Statics";
+			this.staticsToolStripMenuItem.Click += new System.EventHandler(this.staticsToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -147,6 +156,7 @@
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		public System.Windows.Forms.Label label_kol_min;
 		public System.Windows.Forms.Label labelTime;
+		private System.Windows.Forms.ToolStripMenuItem staticsToolStripMenuItem;
 	}
 }
 

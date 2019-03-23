@@ -23,13 +23,11 @@ namespace psevdoSapper {
 				
 				SaveSetAndRez saveS_R = (SaveSetAndRez)fileRead.Deserialize(file);
 				file.Close();
-
+				
+				statistiks = new StatisticsData();
+				statistiks.massAllTimeData = saveS_R.Statistics;
 				selectedBatton = saveS_R.selectedBatton;
 				supMatrix = saveS_R.createMatrixSapperButton(this);
-
-				/////////////////////////////////////////////
-				statistiks = new StatisticsData();
-				/////////////////////////////////////////////
 			}
 			catch {
 				supMatrix = new MatrixSapperButton(this, 16, 16, 40); // соответствует Medium
@@ -49,6 +47,10 @@ namespace psevdoSapper {
 
 		public void Defeat() {
 			if(!FormDefeat.open) {
+				if(selectedBatton != radioButtonOption.Special) {
+					statistiks.massAllTimeData[(int)selectedBatton, 0]++;
+					statistiks.massCurrentTimeData[(int)selectedBatton, 0]++;
+				}
 				FormDefeat defForm = new FormDefeat(this);
 				defForm.Show();
 			}
@@ -56,22 +58,36 @@ namespace psevdoSapper {
 
 		public void Victory() {
 			if (!FormVictory.open) {
-				statistiks.massAllTimeData[(int)selectedBatton, 1]++;
-				if (supMatrix.seconds < statistiks.massAllTimeData[(int)selectedBatton, 2])
-					statistiks.massAllTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+				if(selectedBatton != radioButtonOption.Special) {
+					statistiks.massAllTimeData[(int)selectedBatton, 0]++;
+					statistiks.massCurrentTimeData[(int)selectedBatton, 0]++;
 
-				statistiks.massCurrentTimeData[(int)selectedBatton, 1]++;
-				if(supMatrix.seconds < statistiks.massCurrentTimeData[(int)selectedBatton, 2])
-					statistiks.massCurrentTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+					statistiks.massAllTimeData[(int)selectedBatton, 1]++;
+					if(statistiks.massAllTimeData[(int)selectedBatton, 1] == 1)
+						statistiks.massAllTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+					else if(supMatrix.seconds < statistiks.massAllTimeData[(int)selectedBatton, 2])
+						statistiks.massAllTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+
+					if(statistiks.massCurrentTimeData[(int)selectedBatton, 1] == 1)
+						statistiks.massCurrentTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+					statistiks.massCurrentTimeData[(int)selectedBatton, 1]++;
+					if(supMatrix.seconds < statistiks.massCurrentTimeData[(int)selectedBatton, 2])
+						statistiks.massCurrentTimeData[(int)selectedBatton, 2] = supMatrix.seconds;
+				}
 
 				FormVictory vicForm = new FormVictory(this, supMatrix.seconds);
 				vicForm.Show();
 			}
-		}	
+		}
 		
 		// New game
 		private void newGameToolStripMenuItem_Click(object sender, EventArgs e) {
 			Restart(supMatrix.n, supMatrix.m, supMatrix.kol_min);
+		}
+		
+		private void staticsToolStripMenuItem_Click(object sender, EventArgs e) {
+			FormStatistiks StatForm = new FormStatistiks(this, statistiks, selectedBatton);
+			StatForm.Show();
 		}
 
 		// Settings - вызвать окно настройки размера
@@ -98,13 +114,15 @@ namespace psevdoSapper {
 
 				using(FileStream fs = new FileStream("settimgs.txt", FileMode.OpenOrCreate)) {
 					if(save) {
-						SaveSetAndRez saveS_R = new SaveSetAndRez(selectedBatton, supMatrix.matrix,
-							supMatrix.n, supMatrix.m, supMatrix.kol_min, supMatrix.kol_ost_min);
+						SaveSetAndRez saveS_R = new SaveSetAndRez(statistiks, supMatrix, true);
 						formatter.Serialize(fs, saveS_R);
 					}
 					else {
-						SaveSetAndRez saveS_R = new SaveSetAndRez(selectedBatton, supMatrix.n,
-																  supMatrix.m, supMatrix.kol_min);
+						if(selectedBatton != radioButtonOption.Special) {
+							statistiks.massAllTimeData[(int)selectedBatton, 0]++;
+							statistiks.massCurrentTimeData[(int)selectedBatton, 0]++;
+						}
+						SaveSetAndRez saveS_R = new SaveSetAndRez(statistiks, supMatrix);
 						formatter.Serialize(fs, saveS_R);
 					}
 				}
@@ -120,6 +138,6 @@ namespace psevdoSapper {
 					Close();
 				}
 			}
-		}		
+		}
 	}
 }

@@ -11,9 +11,12 @@ namespace psevdoSapper {
 			// [i, 1] == побед
 			// [i, 0] == лучшее время
 		
-		public int getAvergeValueByMode(radioButtonOption mode, bool AllTimes) {
-			return (AllTimes) ? (massAllTimeData[(int)mode, 1] / massAllTimeData[(int)mode, 0] * 100) :
-				(massCurrentTimeData[(int)mode, 1] / massCurrentTimeData[(int)mode, 0] * 100);
+		public int getAvergeValueByMode(int mode, bool AllTimes) {
+			return (AllTimes) ?
+				((massAllTimeData[mode, 0] == 0) ?
+					0 : (100 * massAllTimeData[mode, 1] / massAllTimeData[mode, 0])) :
+				((massCurrentTimeData[mode, 0] == 0) ?
+					0 : (100 * massCurrentTimeData[mode, 1] / massCurrentTimeData[mode, 0]));
 		}
 	}
 }
