@@ -12,9 +12,10 @@ namespace psevdoSapper {
 
 		public FormClose(Form1 form) {
 			InitializeComponent();
+			open = true;
 			main_form = form;
 			main_form.Enabled = false;
-			open = true;
+			main_form.supMatrix.TimerStop();
 		}
 
 		// сохранить
@@ -37,6 +38,7 @@ namespace psevdoSapper {
 		}
 
 		private void FormClose_FormClosing(object sender, FormClosingEventArgs e) {
+			main_form.supMatrix.TimerStart();
 			main_form.Enabled = true;
 			open = false;
 		}

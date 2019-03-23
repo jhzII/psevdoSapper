@@ -4,68 +4,45 @@ namespace psevdoSapper {
 
 	[Serializable]
 	public class SaveSetAndRez {
+		public int[,] Statistics;
 		public radioButtonOption selectedBatton;
-		public bool save; // true, если надо сохранять
-		public SapperButton[,] matrix;
+		bool save; // true, если надо сохранять
+		SapperButton[,] matrix;
 
-		public byte n; // количество столбцов
-		public byte m; // количество строк 
-		public int kol_min; // количество мин 		
-		public int kol_ost_min;  // количество мин, которые выделены
+		byte n; // количество столбцов
+		byte m; // количество строк 
+		int kol_min; // количество мин 		
+		int kol_ost_min;  // количество мин, которые выделены
+		int time;
+
+		public SaveSetAndRez(StatisticsData statistics, MatrixSapperButton mainMatrix, bool needSave = false) {
+			Statistics = statistics.massAllTimeData;
+			selectedBatton = mainMatrix.form.selectedBatton;
+
+			save = needSave;
+			if (save) { // надо ли сохранять прогресс
+				matrix = mainMatrix.matrix;
+				n = mainMatrix.n;
+				m = mainMatrix.m;
+				kol_min = mainMatrix.kol_min;
+				kol_ost_min = mainMatrix.kol_ost_min;
+				time = mainMatrix.seconds;
+			}
+		}
 		
-		// не надо сохранять прогресс 
-		public SaveSetAndRez(radioButtonOption option, byte n, byte m, int kol_min) {
-			selectedBatton = option;
-			this.n = n;
-			this.n = n;
-			this.m = m;
-			this.kol_min = kol_min;
-			save = false;
-		}
-
-		// надо сохранять прогресс 
-		public SaveSetAndRez(radioButtonOption option, SapperButton[,] matrix,
-			byte n, byte m, int kol_min, int kol_ost_min) {
-			selectedBatton = option;
-			this.matrix = matrix;
-			this.n = n;
-			this.m = m;
-			this.kol_min = kol_min;
-			this.kol_ost_min = kol_ost_min;
-			save = true;
-		}
-
 		public MatrixSapperButton createMatrixSapperButton(Form1 form) {
 			MatrixSapperButton matrixSB = new MatrixSapperButton(null, 0, 0, 0); // мне не нравится эта строка  
 
 			if(save) {
 				form.startGame = true;
-				matrixSB = new MatrixSapperButton(form, matrix, n, m, kol_min, kol_ost_min);
+				matrixSB = new MatrixSapperButton(form, matrix, n, m, kol_min, kol_ost_min, time);
 				for(int i = 0; i < n; i++)
 					for(int j = 0; j < m; j++)
 						if(!matrixSB.matrix[i, j].open)
 							matrixSB.matrix[i, j].MouseUp += matrixSB.OpenMove;
 						else if(matrixSB.matrix[i, j].open_value != 0)
 							matrixSB.matrix[i, j].MouseDoubleClick += matrixSB.HelpOpenCellsMove;
-				// то что выше оставляем, тк игра которая не начиналась, будет сохранятся с save = false
-				//int kol_close = 0;
-				//for(int i = 0; i < n; i++)
-				//	for(int j = 0; j < m; j++)
-				//		if(!matrixSB.matrix[i, j].open) kol_close++;
-
-				//if (kol_close == n * m) { //игра не начиналась
-				//	for(int i = 0; i < n; i++)
-				//		for(int j = 0; j < m; j++)
-				//			matrixSB.matrix[i, j].MouseUp += matrixSB.FirstMove;
-				//}
-				//else { //игра начиналась
-				//	for(int i = 0; i < n; i++)
-				//		for(int j = 0; j < m; j++)
-				//			if(!matrixSB.matrix[i, j].open)
-				//				matrixSB.matrix[i, j].MouseUp += matrixSB.OpenMove;
-				//			else if(matrixSB.matrix[i, j].open_value != 0) 
-				//				matrixSB.matrix[i, j].MouseDoubleClick += matrixSB.HelpOpenCellsMove;
-				//}
+				matrixSB.TimerStart();
 			}
 			else {
 				switch(selectedBatton) {

@@ -135,11 +135,15 @@ namespace psevdoSapper {
 					correctness = false;
 					textBoxMines.Text = "5";
 				}
-				else if(number > Convert.ToInt32(textBoxHeight.Text) * 
-								 Convert.ToInt32(textBoxWidth.Text) * 0.9) {
+				else if(number > Math.Min((Convert.ToInt32(textBoxHeight.Text) * 
+								 		  Convert.ToInt32(textBoxWidth.Text) * 0.9), 
+										  (Convert.ToInt32(textBoxHeight.Text) *
+										   Convert.ToInt32(textBoxWidth.Text) - 9))) {
 					correctness = false;
-					textBoxMines.Text = "" + (Convert.ToInt32(textBoxHeight.Text) * 
-											  Convert.ToInt32(textBoxWidth.Text) * 0.9);
+					textBoxMines.Text = "" + (int)Math.Min((Convert.ToInt32(textBoxHeight.Text) *
+															Convert.ToInt32(textBoxWidth.Text) * 0.9),
+														   (Convert.ToInt32(textBoxHeight.Text) *
+															Convert.ToInt32(textBoxWidth.Text) - 9));
 				}
 			}
 			else {

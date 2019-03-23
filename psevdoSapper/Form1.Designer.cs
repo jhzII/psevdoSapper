@@ -32,15 +32,18 @@
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.labelTime = new System.Windows.Forms.Label();
+			this.staticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label_kol_min
 			// 
 			this.label_kol_min.AutoSize = true;
-			this.label_kol_min.Location = new System.Drawing.Point(201, 240);
+			this.label_kol_min.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.label_kol_min.Location = new System.Drawing.Point(172, 240);
 			this.label_kol_min.Name = "label_kol_min";
-			this.label_kol_min.Size = new System.Drawing.Size(71, 13);
+			this.label_kol_min.Size = new System.Drawing.Size(98, 18);
 			this.label_kol_min.TabIndex = 0;
 			this.label_kol_min.Text = "label_kol_min";
 			// 
@@ -60,6 +63,7 @@
 			this.gameToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newGameToolStripMenuItem,
             this.toolStripSeparator1,
+            this.staticsToolStripMenuItem,
             this.settingsToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
@@ -70,31 +74,31 @@
 			// newGameToolStripMenuItem
 			// 
 			this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
-			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.newGameToolStripMenuItem.Text = "New game";
 			this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(128, 6);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
 			// 
 			// settingsToolStripMenuItem
 			// 
 			this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.settingsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.settingsToolStripMenuItem.Text = "Settings";
 			this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator2
 			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(128, 6);
+			this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
 			// 
 			// exitToolStripMenuItem
 			// 
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
+			this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.exitToolStripMenuItem.Text = "Exit";
 			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
@@ -105,16 +109,34 @@
 			this.helpToolStripMenuItem.Text = "Help";
 			this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
 			// 
+			// labelTime
+			// 
+			this.labelTime.AutoSize = true;
+			this.labelTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.labelTime.Location = new System.Drawing.Point(43, 240);
+			this.labelTime.Name = "labelTime";
+			this.labelTime.Size = new System.Drawing.Size(71, 18);
+			this.labelTime.TabIndex = 2;
+			this.labelTime.Text = "labelTime";
+			// 
+			// staticsToolStripMenuItem
+			// 
+			this.staticsToolStripMenuItem.Name = "staticsToolStripMenuItem";
+			this.staticsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.staticsToolStripMenuItem.Text = "Statics";
+			this.staticsToolStripMenuItem.Click += new System.EventHandler(this.staticsToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(284, 262);
+			this.Controls.Add(this.labelTime);
 			this.Controls.Add(this.label_kol_min);
 			this.Controls.Add(this.menuStrip1);
 			this.MainMenuStrip = this.menuStrip1;
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "Psevdo Sapper";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
 			this.menuStrip1.ResumeLayout(false);
 			this.menuStrip1.PerformLayout();
@@ -133,6 +155,8 @@
 		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
 		public System.Windows.Forms.Label label_kol_min;
+		public System.Windows.Forms.Label labelTime;
+		private System.Windows.Forms.ToolStripMenuItem staticsToolStripMenuItem;
 	}
 }
 
