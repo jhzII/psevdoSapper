@@ -93,7 +93,7 @@ namespace psevdoSapper {
 			}
 		}
 
-		// помощь открытия очевдных клеток без мин -- мб поражение
+		// помощь открытия очевидных клеток без мин -- мб поражение
 		public void HelpOpenCellsMove(object sender, MouseEventArgs e) {
 			SapperButton button = sender as SapperButton;
 			if(button != null) {

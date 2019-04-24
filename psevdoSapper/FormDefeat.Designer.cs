@@ -31,7 +31,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(110, 25);
+			this.label1.Location = new System.Drawing.Point(111, 24);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(39, 13);
 			this.label1.TabIndex = 0;
@@ -39,7 +39,7 @@
 			// 
 			// buttonExit
 			// 
-			this.buttonExit.Location = new System.Drawing.Point(29, 85);
+			this.buttonExit.Location = new System.Drawing.Point(41, 59);
 			this.buttonExit.Name = "buttonExit";
 			this.buttonExit.Size = new System.Drawing.Size(75, 23);
 			this.buttonExit.TabIndex = 1;
@@ -49,7 +49,7 @@
 			// 
 			// buttonNewGame
 			// 
-			this.buttonNewGame.Location = new System.Drawing.Point(157, 85);
+			this.buttonNewGame.Location = new System.Drawing.Point(141, 59);
 			this.buttonNewGame.Name = "buttonNewGame";
 			this.buttonNewGame.Size = new System.Drawing.Size(75, 23);
 			this.buttonNewGame.TabIndex = 2;
@@ -61,7 +61,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(282, 120);
+			this.ClientSize = new System.Drawing.Size(256, 94);
 			this.Controls.Add(this.buttonNewGame);
 			this.Controls.Add(this.buttonExit);
 			this.Controls.Add(this.label1);
